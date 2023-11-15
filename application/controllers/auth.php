@@ -12,13 +12,12 @@ class Auth extends CI_Controller
         parent::__construct();
         // Load model Pengguna_model.php
         $this->load->model('try/users_model');
-        $this->load->view('templates/header');
-        $this->load->view('auth/auth');
     }
 
     public function register()
     {
-
+        $this->load->view('templates/header');
+        $this->load->view('auth/auth');
         $data = array(
             'Nama_Depan' => $this->input->post('nama_depan'),
             'Nama_Belakang' => $this->input->post('nama_belakang'),
