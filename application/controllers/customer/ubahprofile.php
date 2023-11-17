@@ -4,9 +4,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class ubahprofile extends CI_Controller
 {
+    function __construct()
+    {
+        parent::__construct();
+        $this->load->model('try/users_model');
+    }
     public function index()
     {
-        $data['user'] = $this->user_model->get_user_info(); // Fetch the user's data
+        $idUser = $this->session->userdata('user')->ID;
+        $data['user'] = $this->users_model->getUserByIDWithUnits($idUser);
         $this->load->view('templates/header');
         $this->load->view('templates/customer/sidebar');
         $this->load->view('customer/ubahprofile', $data);
@@ -15,14 +21,12 @@ class ubahprofile extends CI_Controller
     public function update_profile()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $user_id = $this->session->userdata('id_user');
+            $user_id = $this->session->userdata('user')->ID;
 
             // Data yang akan diperbarui
             $data = array(
-                'username' => $this->input->post('username'),
-                'nama_depan' => $this->input->post('nama_depan'),
-                'nama_belakang' => $this->input->post('nama_belakang'),
-                'email' => $this->input->post('email')
+                'Nama_Depan' => $this->input->post('nama_depan'),
+                'Nama_Belakang' => $this->input->post('nama_belakang'),
             );
 
             if ($_FILES['image']['name']) { // Periksa apakah ada gambar yang diunggah
@@ -37,14 +41,14 @@ class ubahprofile extends CI_Controller
                     $upload_data = $this->upload->data();
                     $image = $upload_data['file_name'];
 
-                    $data['image'] = $image;
+                    $data['Image'] = $image;
                 }
             }
 
-            $this->user_model->update_user_profile($user_id, $data);
+            $this->users_model->editUserByID($user_id, $data);
 
             // Redirect kembali ke halaman profil
-            redirect('admin/profile');
+            redirect('customer/profile');
         }
     }
 }

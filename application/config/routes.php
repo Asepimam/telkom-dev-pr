@@ -56,3 +56,5 @@ $route['translate_uri_dashes'] = FALSE;
 $route['dokumen/delete_document/(:num)'] = 'dokumen/delete_document/$1';
 $route['editusers/editUser/(:num)'] = 'editusers/editUser/$1';
 $route['approved/approved_document/(:num)'] = 'approved/approved_document/$1';
+$route['editusers/getuseredit/(:num)'] = 'editusers/getuseredit/$1';
+$route['activitylogs/get_logs_aktivitas/(:num)'] = 'activitylogs/get_logs_aktivitas/$1';

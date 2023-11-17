@@ -8,22 +8,20 @@ class dokumen extends CI_Controller
         parent::__construct();
         $this->load->model('try/documents_model');
         $this->load->model('try/roles');
-        $this->load->model('try/alur_persetujuan');
-        $this->load->model('try/persetujuan_model');
         $this->load->view('templates/header');
-        $this->load->view('templates/customer/sidebar');
+        $this->load->view('templates/admin/sidebar');
         $this->load->view('templates/footer');
     }
     public function index()
     {
         $userId = $this->session->userdata('user')->ID;
         // Menggunakan model untuk mengambil data transaksi dengan JOIN ke tabel customer
-        $data['dokumens'] = $this->documents_model->get_document_by_pengguna($userId);
+        $data['dokumens'] = $this->documents_model->get_document_with_pengguna_and_tujuan();
 
         // Muat tampilan dokumen dengan template header dan footer
 
 
-        $this->load->view('customer/dokumen', $data);
+        $this->load->view('admin/editdokumen', $data);
     }
 
     public function delete_document($document_id)
@@ -35,24 +33,19 @@ class dokumen extends CI_Controller
 
     public function upload()
     {
-        // $data['alur'] = $this->alur_persetujuan->getAlurByUnitRole(1, 2);
         $data['roles'] = $this->roles->get_roles();
         $this->load->view('customer/transaksi', $data);
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $to = $this->input->post('to');
             $subject = $this->input->post('subject');
-            $unit = $this->input->post('unit_id');
-            // search alur pengajuan
-            $alur = $this->alur_persetujuan->getAlurByUnitRole($to);
+
 
 
             $data = array(
                 'Pengaju_ID' => $this->session->userdata('user')->ID,
                 'Role_Tujuan_ID' => $to,
                 'Deskripsi' => $subject,
-                'alur_persetujuan_id' => $alur->id,
-                'Dari_Unit' => $unit
             );
 
             // Upload Dokumen
@@ -70,6 +63,7 @@ class dokumen extends CI_Controller
                 $this->documents_model->insert_document(
                     $data
                 );
+
 
                 redirect('customer/dokumen/upload');
             } else {

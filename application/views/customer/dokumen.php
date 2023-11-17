@@ -27,14 +27,14 @@
 
                         </tr>
                     </thead>
+
                     <tbody>
                         <?php foreach ($dokumens as $document) : ?>
+                            <?php var_dump($document->ID_Doc) ?>
                             <tr>
                                 <td class="log-icon" style="cursor: pointer;">
                                     &#128065 <!-- Karakter Unicode untuk ikon mata -->
-                                    <button><a href="<?= base_url('customer/activitylogs'); ?>" class="log-link" data-url="<?= base_url('customer/activitylogs'); ?>">
-                                            <span class="log-text">Log</span>
-                                        </a></button>
+                                    <a href="<?= base_url(); ?>customer/activitylogs/get_logs_aktivitas/<?php echo $document->ID_Doc ?>" class=" btn btn-secondary btn-sm active" role="button" aria-pressed="true">Log</a>
                                 </td>
                                 <td><?php echo $document->Nama_Depan; ?></td>
                                 <td><?php echo $document->Document; ?></td>

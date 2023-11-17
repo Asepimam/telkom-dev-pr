@@ -14,7 +14,7 @@
                         <label for="to">Kepada:</label>
                         <select id="to" name="to" class="form-control">
                             <?php foreach ($roles as $role) : ?>
-                                <option value="<?php echo $role->ID; ?>"><?php echo $role->Nama_Role; ?></option>
+                                <option value="<?php echo $role->ID_Role; ?>"><?php echo $role->Nama_Role; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -22,6 +22,8 @@
                         <label for="subject">Subjek:</label>
                         <input type="text" id="subject" name="subject" class="form-control" placeholder="Isi Subjek">
                     </div>
+                    <input type="hidden" id="unit_id" name="unit_id" value="<?php echo $this->session->userdata('user')->Unit_ID; ?>">
+
                 </div>
             </div>
             <div class="form-group">

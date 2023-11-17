@@ -26,21 +26,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($transaksi as $row) : ?>
+                        <?php foreach ($dokumens as $document) : ?>
                             <tr>
-                                <td><?php echo $row->nama_depan; ?></td>
+
+                                <td><?php echo $document->Nama_Depan; ?></td>
                                 <td>
-                                    <a href="<?php echo base_url('assets/upload/' . $row->dokumen); ?>" target="_blank"><?php echo $row->dokumen; ?></a><br>
-                                    <a href="<?php echo base_url('admin/transaksi/qrcode/' . $row->id_dokumen); ?>" class="btn btn-default btn-xs generate-qrcode">
-                                        Generate QR Code <i class="fa fa-qrcode"></i>
-                                    </a>
+                                    <a href="<?php echo base_url('assets/upload/' . $document->Document); ?>" target="_blank"><?php echo $document->Document; ?></a><br>
+
                                 </td>
-                                <td><?php echo $row->penerima; ?></td>
-                                <td><?php echo $row->tujuan; ?></td>
-                                <td><?php echo $row->tanggal_upload; ?></td>
-                                <td><?php echo $row->tanggal_selesai; ?></td>
+                                <!-- <td><?php echo $document->Document; ?></td> -->
+                                <td><?php echo $document->Nama_Role; ?></td>
+                                <td><?php echo $document->Deskripsi; ?></td>
+                                <td><?php echo $document->created_at; ?></td>
+                                <td><?php echo $document->Status; ?></td>
                                 <td>
-                                    <button class="btn btn-danger delete-button" data-id="<?php echo $row->id_dokumen; ?>">Delete</button>
+                                    <button class="btn btn-sm btn-info delete-btn" data-document-id="<?php echo $document->ID_Doc ?>">hapus</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -130,4 +130,28 @@
             }
         });
     }
+</script>
+<!-- delete jquery -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const documentId = this.getAttribute('data-document-id');
+                deleteDocument(documentId);
+            });
+        });
+
+        function deleteDocument(documentId) {
+            // Kirim permintaan AJAX ke kontroler
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    location.reload();
+                }
+            };
+            xhr.open('GET', "<?php echo site_url(); ?>admin/dokumen/delete_document/" + documentId, true);
+            xhr.send();
+        }
+    });
 </script>

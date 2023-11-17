@@ -14,7 +14,7 @@ class Users_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('pengguna');
-        $this->db->join('roles', 'roles.ID = pengguna.Role_ID');
+        $this->db->join('roles', 'roles.ID_Role = pengguna.Role_ID');
         $query = $this->db->get();
         return $query->result();
     }
@@ -59,10 +59,13 @@ class Users_model extends CI_Model
         return null;
     }
 
-    public function getUserByID($id)
+    public function getUserByIDWithUnits($id)
     {
-        $this->db->where('ID', $id);
-        $query = $this->db->get('pengguna');
+        $this->db->select('pengguna.*, units.unit_name');
+        $this->db->from('pengguna');
+        $this->db->join('units', 'units.unit_id = pengguna.Unit_ID');
+        $this->db->where('pengguna.ID', $id);
+        $query = $this->db->get();
         return $query->row();
     }
 
@@ -70,5 +73,39 @@ class Users_model extends CI_Model
     {
         $this->db->where('ID', $id);
         $this->db->update('pengguna', $data);
+    }
+    public function get_units()
+    {
+        $this->db->select('*');
+        $this->db->from('units');
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function get_user_with_roles_units()
+    {
+        $this->db->select('pengguna.*, roles.Nama_Role, units.unit_name');
+        $this->db->from('pengguna');
+        $this->db->join('roles', 'roles.ID_Role= pengguna.Role_ID');
+        $this->db->join('units', 'units.unit_id = pengguna.Unit_ID');
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function get_user_with_roles_units_by_id($id)
+    {
+        $this->db->select('pengguna.*, roles.Nama_Role, units.unit_name');
+        $this->db->from('pengguna');
+        $this->db->join('roles', 'roles.ID_Role= pengguna.Role_ID');
+        $this->db->join('units', 'units.unit_id = pengguna.Unit_ID');
+        $this->db->where('pengguna.ID', $id);
+        $query = $this->db->get();
+        return $query->row();
+    }
+    public function getall()
+    {
+        $this->db->select('*');
+        $this->db->from('pengguna');
+        $this->db->join('units', 'units.unit_id = pengguna.Unit_ID');
+        $query = $this->db->get();
+        return $query->result();
     }
 }

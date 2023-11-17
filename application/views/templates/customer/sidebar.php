@@ -12,8 +12,8 @@
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="<?php echo base_url('customer/dashboard') ?>">Dashboard</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="<?php echo base_url('customer/dokumen/upload') ?>">Upload Dokumen</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="<?php echo base_url('customer/dokumen') ?>">Dokumen</a>
-                <!-- <!-- jika user yang mempunyai roles akan menampilkan approve -->
-                <?php if ($this->session->userdata('user')->Role_ID) : ?>
+
+                <?php if ($this->session->userdata('user')->Role_ID != 6) : ?>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="<?php echo base_url('customer/approved') ?>">Approve</a>
                 <?php endif; ?>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="<?php echo base_url('auth/logout') ?>">Keluar</a>

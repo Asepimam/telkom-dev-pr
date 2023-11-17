@@ -26,7 +26,7 @@ class Documents_model extends CI_Model
         $this->db->select('*');
         $this->db->from('dokumen');
         $this->db->join('pengguna', 'pengguna.ID = dokumen.Pengaju_ID');
-        $this->db->join('roles', 'roles.ID = dokumen.Role_Tujuan_ID');
+        $this->db->join('roles', 'roles.ID_Role = dokumen.Role_Tujuan_ID');
         $query = $this->db->get();
         return $query->result();
     }
@@ -47,9 +47,30 @@ class Documents_model extends CI_Model
         $this->db->select('*');
         $this->db->from('dokumen');
         $this->db->join('pengguna', 'pengguna.ID = dokumen.Pengaju_ID');
-        $this->db->join('roles', 'roles.ID = dokumen.Role_Tujuan_ID');
+        $this->db->join('roles', 'roles.ID_Role = dokumen.Role_Tujuan_ID');
         $this->db->where('dokumen.Pengaju_ID', $pengguna_id);
         $query = $this->db->get();
         return $query->result();
+    }
+    // buat sebuah function yang akan melakukan handel untuk mengambil data document berdasarkan alur_tujuan 
+    public function getDocumetBytujuan_id($id)
+    {
+        $this->db->select('*');
+        $this->db->from('dokumen');
+        $this->db->join('pengguna', 'pengguna.ID = dokumen.Pengaju_ID');
+        $this->db->join('roles', 'roles.ID_Role = dokumen.Role_Tujuan_ID');
+        $this->db->where('dokumen.alur_persetujuan_id', $id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function get_document_by_id($id)
+    {
+        $this->db->select('*');
+        $this->db->from('dokumen');
+        $this->db->join('pengguna', 'pengguna.ID = dokumen.Pengaju_ID');
+        $this->db->join('roles', 'roles.ID_Role = dokumen.Role_Tujuan_ID');
+        $this->db->where('dokumen.ID_Doc', $id);
+        $query = $this->db->get();
+        return $query->row();
     }
 }

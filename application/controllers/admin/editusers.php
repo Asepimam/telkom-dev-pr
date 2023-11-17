@@ -12,11 +12,11 @@ class editusers extends CI_Controller
 
     public function index()
     {
-        $data['user'] = $this->users_model->getUsersWithRoles();
+        $data['user'] = $this->users_model->getall();
 
         $this->load->view('templates/admin/sidebar');
         $this->load->view('templates/header');
-        $this->load->view('admin/edituser', $data);
+        $this->load->view('admin/users', $data);
         $this->load->view('templates/footer');
     }
     public function getUnitData()
@@ -26,12 +26,31 @@ class editusers extends CI_Controller
     }
     public function editUser($id)
     {
-        $data = $this->input->post(); // Ambil data dari POST request, sesuaikan dengan kebutuhan
+        $data = array(
+            'Nama_Depan' => $this->input->post('namadepan'),
+            'Nama_Belakang' => $this->input->post('namabelakang'),
+            'Email' => $this->input->post('email'),
+            'User_Type' => $this->input->post('usertype'),
+            'Role_ID' => $this->input->post('role'),
+            'Username' => $this->input->post('nama'),
+            'activate' => $this->input->post('activate'),
+            'Unit_ID' => $this->input->post('unit')
+        );
+
 
         // Call the model to update the user by ID
-        $this->your_model_name->editUserByID($id, $data); // Ganti 'your_model_name' dengan nama model yang sesuai
+        $this->users_model->editUserByID($id, $data); // Ganti 'your_model_name' dengan nama model yang sesuai
 
         // Redirect or return a response as needed
-        redirect('your_controller/index');
+        redirect('admin/editusers');
+    }
+    public function getuseredit($id)
+    {
+        $data['user'] = $this->users_model->get_user_with_roles_units_by_id($id);
+        $data['roles'] = $this->roles->get_roles();
+        $data['units'] = $this->users_model->get_units();
+        $this->load->view('templates/admin/sidebar');
+        $this->load->view('templates/header');
+        $this->load->view('admin/edituser', $data);
     }
 }

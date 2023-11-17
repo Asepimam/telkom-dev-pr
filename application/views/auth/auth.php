@@ -32,7 +32,9 @@
     <div class="container" id="container">
         <?php include(__DIR__ . '/form_login.php');
         ?>
-        <?php include(__DIR__ . '/form_register.php');
+        <?php
+
+        include(__DIR__ . '/form_register.php');
         ?>
 
         <div class="overlay-container">

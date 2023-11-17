@@ -12,19 +12,22 @@ class Auth extends CI_Controller
         parent::__construct();
         // Load model Pengguna_model.php
         $this->load->model('try/users_model');
+
+        $data['units'] = $this->users_model->get_units();
+        $this->load->view('templates/header');
+        $this->load->view('auth/auth', $data);
     }
 
     public function register()
     {
-        $this->load->view('templates/header');
-        $this->load->view('auth/auth');
+
         $data = array(
             'Nama_Depan' => $this->input->post('nama_depan'),
             'Nama_Belakang' => $this->input->post('nama_belakang'),
             'Email' => $this->input->post('email'),
             'Password' => password_hash($this->input->post('password'), PASSWORD_BCRYPT),
             'Username' => $this->input->post('username'),
-            // ... tambahkan kolom lainnya sesuai kebutuhan
+            'Unit_ID' => $this->input->post('unit'),
         );
 
 
@@ -43,11 +46,8 @@ class Auth extends CI_Controller
         $this->form_validation->set_rules('username', 'Username', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
 
-        if ($this->form_validation->run() == FALSE) {
-            // Jika validasi gagal, tampilkan form login
-            $this->load->view('templates/header');
-            $this->load->view('auth/auth');
-        } else {
+        if ($this->form_validation->run() == TRUE) {
+
             $username = $this->input->post('username');
             $password = $this->input->post('password');
 

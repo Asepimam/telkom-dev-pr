@@ -10,7 +10,7 @@
         <div class="border-end bg-white" id="sidebar-wrapper">
             <div class="list-group list-group-flush">
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="dashboard">Scan</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="<?php echo base_url('admin/transaksi') ?>">Edit Document</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="<?php echo base_url('admin/dokumen') ?>">Edit Document</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="<?php echo base_url('admin/editusers') ?>">Edit User</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="<?php echo base_url('auth/logout') ?>">Logout</a>
             </div>
