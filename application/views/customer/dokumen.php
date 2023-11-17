@@ -30,7 +30,6 @@
 
                     <tbody>
                         <?php foreach ($dokumens as $document) : ?>
-                            <?php var_dump($document->ID_Doc) ?>
                             <tr>
                                 <td class="log-icon" style="cursor: pointer;">
                                     &#128065 <!-- Karakter Unicode untuk ikon mata -->
