@@ -62,7 +62,14 @@ class Approved extends CI_Controller
             'Status' => $this->input->post('status'),
             'Catatan' => $this->input->post('catatan'),
         );
-        $this->persetujuan_model->approve_dokumen($dokumen_id, $data);
+        $log_data = array(
+            'dokumen_id' => $this->input->post('id'),
+            'Aktivitas' => 'Persetujuan dokumen disetujui',
+            'Pengguna_ID' => $this->session->userdata('user')->ID,
+            'role_review' => $this->session->userdata('user')->Role_ID // Gantilah sesuai dengan metode autentikasi yang sesuai
+        );
+        $this->persetujuan_model->approve_dokumen($dokumen_id);
+        $this->persetujuan_model->approve_log_persetujuan($data, $log_data);
 
         // // Redirect ke halaman persetujuan dengan pesan sukses
         redirect('customer/approved');

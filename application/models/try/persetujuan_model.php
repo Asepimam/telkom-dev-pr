@@ -21,7 +21,7 @@ class Persetujuan_model extends CI_Model
         return $query->result();
     }
 
-    public function approve_dokumen($dokumen_id, $datas)
+    public function approve_dokumen($dokumen_id,)
     {
         // Ubah status dokumen menjadi "Disetujui"
         $data = array('Status' => 'Disetujui');
@@ -29,10 +29,11 @@ class Persetujuan_model extends CI_Model
             ->update('dokumen', $data);
 
         // Catat log aktivitas
-        $log_data = array(
-            'Aktivitas' => 'Persetujuan dokumen disetujui',
-            'Pengguna_ID' => $this->session->userdata('user')->ID // Gantilah sesuai dengan metode autentikasi yang sesuai
-        );
+
+
+    }
+    public function approve_log_persetujuan($datas, $log_data)
+    {
         $this->db->insert('log_aktivitas', $log_data);
         $this->db->insert('persetujuan', $datas);
     }
